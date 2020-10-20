@@ -21,10 +21,25 @@ namespace RegularAssessmentTranscriptFixedRank
         private string _DefalutSchoolYear = "";
         private string _DefaultSemester = "";
 
-        // 開始日期
-        private DateTime _BeginDate;
-        // 結束日期
-        private DateTime _EndDate;
+        // 開始日期(缺曠)
+        private DateTime _BeginDateAttend;
+        // 結束日期(缺曠)
+        private DateTime _EndDateAttend;
+
+        // 開始日期(獎)
+        private DateTime _BeginDateMerit;
+        // 結束日期(獎)
+        private DateTime _EndDateMerit;
+
+        // 開始日期(康橋懲戒)
+        private DateTime _BeginDateDermit;
+        // 結束日期(康橋懲戒)
+        private DateTime _EndDateDermit;
+
+        // 開始日期(服務學習)
+        private DateTime _BeginDateService;
+        // 結束日期(康橋懲戒)
+        private DateTime _EndDateService;
 
         /// <summary>
         /// 成績校正日期
@@ -171,20 +186,30 @@ namespace RegularAssessmentTranscriptFixedRank
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            if (dtBegin.IsEmpty || dtEnd.IsEmpty)
+            if (dtBeginAttend.IsEmpty || dtEndAttend.IsEmpty)
             {
                 FISCA.Presentation.Controls.MsgBox.Show("日期區間必須輸入!");
                 return;
             }
 
-            if (dtBegin.Value > dtEnd.Value)
+            if (dtBeginAttend.Value > dtEndAttend.Value)
             {
                 FISCA.Presentation.Controls.MsgBox.Show("開始日期必須小於或等於結束日期!!");
                 return;
             }
             SaveTemplate(null, null);
-            _BeginDate = dtBegin.Value;
-            _EndDate = dtEnd.Value;
+            _BeginDateAttend = dtBeginAttend.Value;
+            _EndDateAttend = dtEndAttend.Value;
+
+            _BeginDateMerit = dtBeginMerit.Value;
+            _EndDateMerit = dtEndMerit.Value;
+
+            _BeginDateDermit = dtBeginDermit.Value;
+            _EndDateDermit = dtEndDermit.Value;
+
+            _BeginDateService = dtBeginService.Value;
+            _EndDateService = dtEndService.Value;
+
             if (dtCurDate.IsEmpty)
                 _ScoreCurDate = DateTime.Now;
             else
@@ -196,21 +221,75 @@ namespace RegularAssessmentTranscriptFixedRank
         }
 
         /// <summary>
-        /// 取得畫面上開始日期
+        /// 取得畫面上開始日期(缺曠)
         /// </summary>
         /// <returns></returns>
-        public DateTime GetBeginDate()
+        public DateTime GetBeginDateAttend()
         {
-            return _BeginDate;
+            return _BeginDateAttend;
         }
 
         /// <summary>
-        /// 取得畫面上結束日期
+        /// 取得畫面上結束日期(缺曠)
         /// </summary>
         /// <returns></returns>
-        public DateTime GetEndDate()
+        public DateTime GetEndDateAttend()
         {
-            return _EndDate;
+            return _EndDateAttend;
+        }
+
+        /// <summary>
+        /// 取得畫面上開始日期(獎)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetBeginDateMerit()
+        {
+            return _BeginDateMerit;
+        }
+
+        /// <summary>
+        /// 取得畫面上結束日期(獎)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetEndDateMerit()
+        {
+            return _EndDateMerit;
+        }
+
+        /// <summary>
+        /// 取得畫面上開始日期(康橋懲戒)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetBeginDateDermit()
+        {
+            return _BeginDateDermit;
+        }
+
+        /// <summary>
+        /// 取得畫面上結束日期(康橋懲戒)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetEndDateDermit()
+        {
+            return _EndDateDermit;
+        }
+
+        /// <summary>
+        /// 取得畫面上開始日期(服務學習)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetBeginDateSevice()
+        {
+            return _BeginDateService;
+        }
+
+        /// <summary>
+        /// 取得畫面上結束日期(服務學習)
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetEndDateSevice()
+        {
+            return _EndDateService;
         }
 
         /// <summary>
@@ -335,15 +414,45 @@ namespace RegularAssessmentTranscriptFixedRank
 
                     // 開始與結束日期
                     DateTime dtb, dte;
-                    if (DateTime.TryParse(Configure.BeginDate, out dtb))
-                        dtBegin.Value = dtb;
+                    if (DateTime.TryParse(Configure.BeginDateAttend, out dtb))
+                        dtBeginAttend.Value = dtb;
                     else
-                        dtBegin.Value = DateTime.Now;
+                        dtBeginAttend.Value = DateTime.Now;
 
-                    if (DateTime.TryParse(Configure.EndDate, out dte))
-                        dtEnd.Value = dte;
+                    if (DateTime.TryParse(Configure.EndDateAttend, out dte))
+                        dtEndAttend.Value = dte;
                     else
-                        dtEnd.Value = DateTime.Now;
+                        dtEndAttend.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.BeginDateMerit, out dtb))
+                        dtBeginMerit.Value = dtb;
+                    else
+                        dtBeginMerit.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.EndDateMerit, out dte))
+                        dtEndMerit.Value = dte;
+                    else
+                        dtEndMerit.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.BeginDateDermit, out dtb))
+                        dtBeginDermit.Value = dtb;
+                    else
+                        dtBeginDermit.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.EndDateDermit, out dte))
+                        dtEndDermit.Value = dte;
+                    else
+                        dtEndDermit.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.BeginDateSevice, out dtb))
+                        dtBeginService.Value = dtb;
+                    else
+                        dtBeginService.Value = DateTime.Now;
+
+                    if (DateTime.TryParse(Configure.EndDateSevice, out dte))
+                        dtEndService.Value = dte;
+                    else
+                        dtEndService.Value = DateTime.Now;
 
                     if (Configure.ScoreCurDate != null)
                         dtCurDate.Value = Configure.ScoreCurDate;
@@ -376,7 +485,7 @@ namespace RegularAssessmentTranscriptFixedRank
                     }
                 
                     // 開始與結束日期沒有預設值時給當天
-                    dtCurDate.Value = dtBegin.Value = dtEnd.Value = DateTime.Now;
+                    dtCurDate.Value = dtBeginAttend.Value = dtEndAttend.Value = DateTime.Now;
 
                     if (Configure != null)
                     {
@@ -587,9 +696,18 @@ namespace RegularAssessmentTranscriptFixedRank
                  
                       
 
-            // 儲存開始與結束日期
-            Configure.BeginDate = dtBegin.Value.ToShortDateString();
-            Configure.EndDate = dtEnd.Value.ToShortDateString();
+            // 儲存開始與結束日期(缺曠、獎勵、康橋懲戒、服務學習 分開儲存)
+            Configure.BeginDateAttend = dtBeginAttend.Value.ToShortDateString();
+            Configure.EndDateAttend = dtEndAttend.Value.ToShortDateString();
+
+            Configure.BeginDateMerit = dtBeginMerit.Value.ToShortDateString();
+            Configure.EndDateMerit = dtEndMerit.Value.ToShortDateString();
+
+            Configure.BeginDateDermit = dtBeginDermit.Value.ToShortDateString();
+            Configure.EndDateDermit = dtEndDermit.Value.ToShortDateString();
+
+            Configure.BeginDateSevice = dtBeginService.Value.ToShortDateString();
+            Configure.EndDateSevice = dtEndService.Value.ToShortDateString();
 
             // 是否產生學生清單
             Configure.isExportStudentList = ChkExportStudList.Checked.ToString();

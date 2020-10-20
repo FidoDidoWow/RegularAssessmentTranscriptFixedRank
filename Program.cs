@@ -127,12 +127,16 @@ namespace RegularAssessmentTranscriptFixedRank
             }
             return levelNumber;
         }
-
+        
         static void Program_Click(object sender_, EventArgs e_)
         {
+            KCBSDermitManager kmanager;
             ConfigForm form = new ConfigForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
+                // 專處理康橋客製報表多的東西
+                kmanager = new KCBSDermitManager(form.GetBeginDateDermit(), form.GetEndDateDermit());
+
                 AccessHelper accessHelper = new AccessHelper();
                 //return;
                 List<StudentRecord> overflowRecords = new List<StudentRecord>();
@@ -334,8 +338,21 @@ namespace RegularAssessmentTranscriptFixedRank
                 table.Columns.Add("成績校正日期");
 
                 // 新增 columns name
-                table.Columns.Add("開始日期");
-                table.Columns.Add("結束日期");
+                //table.Columns.Add("開始日期");
+                //table.Columns.Add("結束日期");
+
+                // 上面是舊日期，現在時間區段拆成四種                
+                table.Columns.Add("缺曠區間開始日期");
+                table.Columns.Add("缺曠區間結束日期");
+
+                table.Columns.Add("獎勵區間開始日期");
+                table.Columns.Add("獎勵區間結束日期");
+                table.Columns.Add("康橋懲戒區間開始日期");
+                table.Columns.Add("康橋懲戒區間結束日期");
+                table.Columns.Add("服務學習區間開始日期");
+                table.Columns.Add("服務學習區間結束日期");
+                //幫補StudentID (原本的報表沒有)
+                table.Columns.Add("StudentID");
 
                 // 先固定8個
                 for (int i = 1; i <= 8; i++)
@@ -380,6 +397,9 @@ namespace RegularAssessmentTranscriptFixedRank
                 // 新增服務學習欄位
                 table.Columns.Add("學習服務區間加總");
                 table.Columns.Add("學習服務當學期加總");
+
+                // 傳回康橋專有的表
+                table = kmanager.NewKCBSTable(table);
 
                 // 標頭
                 table.TableName = "ss";
@@ -445,7 +465,7 @@ namespace RegularAssessmentTranscriptFixedRank
                         string pathxls = Path.Combine(System.Windows.Forms.Application.StartupPath, "Reports");
                         if (!Directory.Exists(pathxls))
                             Directory.CreateDirectory(pathxls);
-                        pathxls = Path.Combine(pathxls, ExportReportName + ".xls");
+                        pathxls = Path.Combine(pathxls, ExportReportName + ".xlsx");
 
                         if (File.Exists(pathxls))
                         {
@@ -472,8 +492,8 @@ namespace RegularAssessmentTranscriptFixedRank
                         {
                             System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
                             sd.Title = "另存新檔";
-                            sd.FileName = ExportReportName + ".xls";
-                            sd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+                            sd.FileName = ExportReportName + ".xlsx";
+                            sd.Filter = "Excel檔案 (*.xls)|*.xlsx|所有檔案 (*.*)|*.*";
                             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                             {
                                 try
@@ -916,11 +936,11 @@ namespace RegularAssessmentTranscriptFixedRank
                         StudRecList = K12.Data.Student.SelectByIDs(StudIDList);
 
                         // 取得暫存資料 學習服務區間時數
-                        Dictionary<string, Dictionary<string, decimal>> ServiceLearningByDateDict = Utility.GetServiceLearningByDate(StudIDList, form.GetBeginDate(), form.GetEndDate());
-                        Dictionary<string, List<DataRow>> ServiceLearningDetailByDateDict = Utility.GetServiceLearningDetailByDate(StudIDList, form.GetBeginDate(), form.GetEndDate());
+                        Dictionary<string, Dictionary<string, decimal>> ServiceLearningByDateDict = Utility.GetServiceLearningByDate(StudIDList, form.GetBeginDateSevice(), form.GetEndDateSevice());
+                        Dictionary<string, List<DataRow>> ServiceLearningDetailByDateDict = Utility.GetServiceLearningDetailByDate(StudIDList, form.GetBeginDateSevice(), form.GetEndDateSevice());
 
                         // 服務學習
-                        Utility.SetServiceLearningSum(StudIDList, form.GetBeginDate(), form.GetEndDate(), conf.SchoolYear, conf.Semester);
+                        Utility.SetServiceLearningSum(StudIDList, form.GetBeginDateSevice(), form.GetEndDateSevice(), conf.SchoolYear, conf.Semester);
 
                         Dictionary<string, decimal> ServiceLearningByDateDictSum = Utility.GetServiceLearningByDateDict();
 
@@ -931,13 +951,13 @@ namespace RegularAssessmentTranscriptFixedRank
 
 
                         // 取得缺曠
-                        Dictionary<string, Dictionary<string, int>> AttendanceCountDict = Utility.GetAttendanceCountByDate(StudRecList, form.GetBeginDate(), form.GetEndDate());
-                        Dictionary<string, List<K12.Data.AttendanceRecord>> AttendanceDetailDict = Utility.GetAttendanceDetailByDate(StudRecList, form.GetBeginDate(), form.GetEndDate());
+                        Dictionary<string, Dictionary<string, int>> AttendanceCountDict = Utility.GetAttendanceCountByDate(StudRecList, form.GetBeginDateAttend(), form.GetEndDateAttend());
+                        Dictionary<string, List<K12.Data.AttendanceRecord>> AttendanceDetailDict = Utility.GetAttendanceDetailByDate(StudRecList, form.GetBeginDateAttend(), form.GetEndDateAttend());
 
                         // 取得獎懲
-                        Dictionary<string, Dictionary<string, int>> DisciplineCountDict = Utility.GetDisciplineCountByDate(StudIDList, form.GetBeginDate(), form.GetEndDate());
-                        Dictionary<string, List<K12.Data.DisciplineRecord>> DisciplinedetailDict = Utility.GetDisciplineDetailByDate(StudIDList, form.GetBeginDate(), form.GetEndDate());
-
+                        Dictionary<string, Dictionary<string, int>> DisciplineCountDict = Utility.GetDisciplineCountByDate(StudIDList, form.GetBeginDateMerit(), form.GetEndDateMerit());
+                        Dictionary<string, List<K12.Data.DisciplineRecord>> DisciplinedetailDict = Utility.GetDisciplineDetailByDate(StudIDList, form.GetBeginDateMerit(), form.GetEndDateAttend());
+                        
                         List<K12.Data.PeriodMappingInfo> PeriodMappingList = K12.Data.PeriodMapping.SelectAll();
                         // 節次>類別
                         Dictionary<string, string> PeriodMappingDict = new Dictionary<string, string>();
@@ -946,6 +966,9 @@ namespace RegularAssessmentTranscriptFixedRank
                             if (!PeriodMappingDict.ContainsKey(rec.Name))
                                 PeriodMappingDict.Add(rec.Name, rec.Type);
                         }
+
+                        // 取得康橋獎懲紀錄
+                        kmanager.GetKCBSDermit(StudIDList);
 
                         bkw.ReportProgress(70);
                         elseReady.WaitOne();
@@ -959,8 +982,19 @@ namespace RegularAssessmentTranscriptFixedRank
 
                             // 這區段是新增功能資料
                             // 畫面上開始結束日期
-                            row["開始日期"] = form.GetBeginDate().ToShortDateString();
-                            row["結束日期"] = form.GetEndDate().ToShortDateString();
+                            //row["開始日期"] = form.GetBeginDateAttend().ToShortDateString();
+                            //row["結束日期"] = form.GetEndDateAttend().ToShortDateString();
+
+                            // 上面是舊寫法，現在時間區段 按照缺曠、獎、康橋懲戒、服務學習 拆開來
+                            row["缺曠區間開始日期"] = form.GetBeginDateAttend().ToShortDateString();
+                            row["缺曠區間結束日期"] = form.GetEndDateAttend().ToShortDateString();
+
+                            row["獎勵區間開始日期"] = form.GetBeginDateMerit().ToShortDateString();
+                            row["獎勵區間結束日期"] = form.GetEndDateMerit().ToShortDateString();
+                            row["康橋懲戒區間開始日期"] = form.GetBeginDateDermit().ToShortDateString();
+                            row["康橋懲戒區間結束日期"] = form.GetEndDateDermit().ToShortDateString();
+                            row["服務學習區間開始日期"] = form.GetBeginDateSevice().ToShortDateString();
+                            row["服務學習區間結束日期"] = form.GetEndDateSevice().ToShortDateString();
 
                             if (ServiceLearningByDateDict.ContainsKey(studentID))
                             {
@@ -1833,6 +1867,13 @@ namespace RegularAssessmentTranscriptFixedRank
                                 row[attendanceKey] = 缺曠項目統計[attendanceKey] == 0 ? "" : ("" + 缺曠項目統計[attendanceKey]);
                             }
                             #endregion
+
+                            #region 康橋懲戒
+                            // 加入康橋的ROW 內容
+                            row["StudentID"] = ""+ stuRec.StudentID;
+                            row = kmanager.NewKCBSROW(row); 
+                            #endregion
+
                             #endregion
                             table.Rows.Add(row);
                             progressCount++;
