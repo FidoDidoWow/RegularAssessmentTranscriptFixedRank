@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RegularAssessmentTranscriptFixedRank</RootNamespace>
-    <AssemblyName>RegularAssessmentTranscriptFixedRank</AssemblyName>
+    <AssemblyName>RegularAssessmentTranscriptFixedRank_KCBS</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells">
-      <HintPath>Library\Aspose.Cells.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Aspose.Cells_201402">
+      <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
     </Reference>
     <Reference Include="Aspose.Words">
       <HintPath>Library\Aspose.Words.dll</HintPath>
@@ -112,6 +111,16 @@
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Configure.cs" />
+    <Compile Include="DAO\UDT_KCBSDermit.cs" />
+    <Compile Include="DAO\UDT_KCBSDermitComparison.cs" />
+    <Compile Include="DemeritItemKCBS.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DemeritItemKCBS.Designer.cs">
+      <DependentUpon>DemeritItemKCBS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExportKCBSDermit.cs" />
+    <Compile Include="KCBSDermitManager.cs" />
     <Compile Include="NewConfigure.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +144,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DemeritItemKCBS.resx">
+      <DependentUpon>DemeritItemKCBS.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NewConfigure.resx">
       <DependentUpon>NewConfigure.cs</DependentUpon>

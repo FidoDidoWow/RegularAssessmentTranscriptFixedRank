@@ -8,7 +8,7 @@ namespace RegularAssessmentTranscriptFixedRank
 {
     class Permissions
     {
-        public static string 定期評量成績單固定排名 { get { return "定期評量成績單固定排名.D04E7F02-89C1-4412-81FA-8D87B96BF847"; } }
+        public static string 定期評量成績單固定排名 { get { return "定期評量成績單固定排名.D04E7F02-89C1-4412-81FA-8D87B96BF847_KCBS"; } }
 
         public static bool 定期評量成績單固定排名權限
         {

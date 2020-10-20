@@ -11,6 +11,9 @@ using FISCA.Data;
 using FISCA.Permission;
 using SmartSchool;
 using Campus.ePaperCloud;
+using FISCA.Presentation;
+using Aspose.Cells;
+//using FISCA.UDT;
 
 namespace RegularAssessmentTranscriptFixedRank
 {
@@ -20,7 +23,13 @@ namespace RegularAssessmentTranscriptFixedRank
         [FISCA.MainMethod]
         public static void Main()
         {
-            var btn = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["報表"]["成績相關報表"]["定期評量成績單(固定排名)"];
+            // 先初始化
+            FISCA.UDT.AccessHelper _AccessHelper = new FISCA.UDT.AccessHelper();
+
+            List<DAO.UDT_KCBSDermit> retVal1 = _AccessHelper.Select<DAO.UDT_KCBSDermit>();
+            List<DAO.UDT_KCBSDermitComparison> retVal2 = _AccessHelper.Select<DAO.UDT_KCBSDermitComparison>();
+
+            var btn = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["報表"]["成績相關報表"]["成績通知單(康橋)"]["定期評量成績單(固定排名)(康橋懲戒)"];
             btn.Enable = false;
             K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate
             {
@@ -30,7 +39,42 @@ namespace RegularAssessmentTranscriptFixedRank
 
             //權限設定
             Catalog permission = RoleAclSource.Instance["學生"]["功能按鈕"];
-            permission.Add(new RibbonFeature(Permissions.定期評量成績單固定排名, "定期評量成績單(固定排名)"));
+            permission.Add(new RibbonFeature(Permissions.定期評量成績單固定排名, "定期評量成績單(固定排名)(康橋懲戒)"));
+
+
+            var btn2 = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯出"]["學務相關匯出"]["匯出康橋懲戒紀錄"];
+            btn2.Enable = UserAcl.Current["RegularAssessmentTranscriptFixedRank_kcbs_demrit_export"].Executable;
+
+            btn2.Click += delegate
+            {
+                if (K12.Presentation.NLDPanels.Student.SelectedSource.Count > 0)
+                {
+                    ExportKCBSDermit exporter = new ExportKCBSDermit(K12.Presentation.NLDPanels.Student.SelectedSource);
+
+                    exporter.export();
+                }
+                else
+                {
+                    FISCA.Presentation.Controls.MsgBox.Show("請選擇選學生");
+                    return;
+                }
+            };
+
+            // 匯出康橋懲戒紀錄
+            Catalog catalog1c = RoleAclSource.Instance["學生"]["功能按鈕"];
+            catalog1c.Add(new RibbonFeature("RegularAssessmentTranscriptFixedRank_kcbs_demrit_export", "匯出康橋懲戒紀錄"));
+
+            Catalog ribbon = RoleAclSource.Instance["學生"]["資料項目"];
+            ribbon.Add(new FISCA.Permission.DetailItemFeature("K12.Student.DemeritItem_KCBS", "康橋懲戒記錄"));
+
+            FISCA.Permission.FeatureAce UserPermission;
+
+            //懲戒記錄
+            UserPermission = FISCA.Permission.UserAcl.Current["K12.Student.DemeritItem_KCBS"];
+            if (UserPermission.Editable || UserPermission.Viewable)
+                K12.Presentation.NLDPanels.Student.AddDetailBulider(new DetailBulider<DemeritItemKCBS>());
+
+
         }
 
         // 學生清單暫存
@@ -419,7 +463,9 @@ namespace RegularAssessmentTranscriptFixedRank
 
                         try
                         {
-                            _wbStudentList.Save(pathxls, Aspose.Cells.FileFormatType.Excel2003);
+                            // 舊寫法
+                            //_wbStudentList.Save(pathxls, Aspose.Cells.FileFormatType.Excel2003);
+                            _wbStudentList.Save(pathxls, SaveFormat.Xlsx);
                             System.Diagnostics.Process.Start(pathxls);
                         }
                         catch
@@ -432,9 +478,9 @@ namespace RegularAssessmentTranscriptFixedRank
                             {
                                 try
                                 {
-                                    _wbStudentList.Save(sd.FileName, Aspose.Cells.FileFormatType.Excel2003);
-
-
+                                    // 舊寫法
+                                    //_wbStudentList.Save(sd.FileName, Aspose.Cells.FileFormatType.Excel2003);
+                                    _wbStudentList.Save(sd.FileName, SaveFormat.Xlsx);
                                 }
                                 catch
                                 {
