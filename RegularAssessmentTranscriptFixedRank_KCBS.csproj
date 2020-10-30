@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Aspose.Cells_201402">
       <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Aspose.Words">
       <HintPath>Library\Aspose.Words.dll</HintPath>
