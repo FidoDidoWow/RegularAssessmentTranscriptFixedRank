@@ -28,6 +28,7 @@ namespace RegularAssessmentTranscriptFixedRank
 
             List<DAO.UDT_KCBSDermit> retVal1 = _AccessHelper.Select<DAO.UDT_KCBSDermit>();
             List<DAO.UDT_KCBSDermitComparison> retVal2 = _AccessHelper.Select<DAO.UDT_KCBSDermitComparison>();
+            List<DAO.UDT_finalTotalKCBSDermit> retVal3 = _AccessHelper.Select<DAO.UDT_finalTotalKCBSDermit>();
 
             var btn = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["報表"]["成績相關報表"]["成績通知單(康橋)"]["定期評量成績單(固定排名)(康橋懲戒)"];
             btn.Enable = false;
