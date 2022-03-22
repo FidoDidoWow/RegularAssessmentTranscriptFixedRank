@@ -232,7 +232,7 @@
         </member>
         <member name="T:SmartSchool.Customization.Data.CourseRecord_New">
             <summary>
-            課程資訊(New)
+            課程紀錄(New)
             </summary>
         </member>
         <member name="T:SmartSchool.Customization.Data.CourseRecord">
