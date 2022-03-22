@@ -398,6 +398,12 @@ namespace RegularAssessmentTranscriptFixedRank
 "   , rank_matrix.avg" +
 "   , rank_matrix.avg_bottom_50" +
 "   , rank_matrix.avg_bottom_25" +
+"    , rank_matrix.pr_88" +
+"    ,rank_matrix.pr_75" +
+"    ,rank_matrix.pr_50" +
+"    ,rank_matrix.pr_25" +
+"    ,rank_matrix.pr_12" +
+"    ,rank_matrix.std_dev_pop" +
 " 	, rank_matrix.level_gte100" +
 " 	, rank_matrix.level_90" +
 " 	, rank_matrix.level_80" +
@@ -409,6 +415,8 @@ namespace RegularAssessmentTranscriptFixedRank
 " 	, rank_matrix.level_20" +
 " 	, rank_matrix.level_10" +
 " 	, rank_matrix.level_lt10" +
+"  , level_gte100+level_90 + level_80 + level_70 + level_60 AS level_60up" +
+"  , level_50+level_40 + level_30 + level_20 + level_10 + level_lt10 AS level_60down" +
 " FROM " +
 " 	rank_matrix" +
 " 	LEFT OUTER JOIN rank_detail" +

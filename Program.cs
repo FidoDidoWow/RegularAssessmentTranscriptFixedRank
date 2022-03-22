@@ -61,6 +61,8 @@ namespace RegularAssessmentTranscriptFixedRank
                 }
             };
 
+
+
             // 匯出康橋懲戒紀錄
             Catalog catalog1c = RoleAclSource.Instance["學生"]["功能按鈕"];
             catalog1c.Add(new RibbonFeature("RegularAssessmentTranscriptFixedRank_kcbs_demrit_export", "匯出康橋懲戒紀錄"));
@@ -128,7 +130,24 @@ namespace RegularAssessmentTranscriptFixedRank
             }
             return levelNumber;
         }
-        
+
+        /// <summary>
+        /// 四捨五入至使用者指定位數
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ParseScore(string str)
+        {
+            string value = "";
+            decimal dc;
+            if (decimal.TryParse(str, out dc))
+            {
+                value = Math.Round(dc, AvgRd, MidpointRounding.AwayFromZero).ToString();
+            }
+
+            return value;
+        }
+
         static void Program_Click(object sender_, EventArgs e_)
         {
             KCBSDermitManager kmanager;
@@ -224,6 +243,14 @@ namespace RegularAssessmentTranscriptFixedRank
                 r2List.Add("level_20");
                 r2List.Add("level_10");
                 r2List.Add("level_lt10");
+                r2List.Add("level_60up");
+                r2List.Add("level_60down");
+                r2List.Add("std_dev_pop");
+                r2List.Add("pr_88");
+                r2List.Add("pr_75");
+                r2List.Add("pr_50");
+                r2List.Add("pr_25");
+                r2List.Add("pr_12");
 
                 r3List.Add("班排名");
                 r3List.Add("科排名");
