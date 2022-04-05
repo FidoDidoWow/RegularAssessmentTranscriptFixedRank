@@ -1303,8 +1303,11 @@ namespace RegularAssessmentTranscriptFixedRank
                                                                 // 五標PR填值
                                                                 foreach (string rItem in r2List)
                                                                 {
-                                                                    if (RankMatrixDataDict[studentID][k1][rItem] != null)
-                                                                        row["班排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
+                                                                    if (RankMatrixDataDict[studentID][k1][rItem] != null)                                                                        
+                                                                        if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                                            row["班排名" + subjectIndex + "_" + rItem] = ParseScore(RankMatrixDataDict[studentID][k1][rItem].ToString());
+                                                                        else
+                                                                            row["班排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
                                                                 }
                                                             }
 
@@ -1327,7 +1330,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                                                 foreach (string rItem in r2List)
                                                                 {
                                                                     if (RankMatrixDataDict[studentID][k1][rItem] != null)
-                                                                        row["科排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
+                                                                        if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                                            row["科排名" + subjectIndex + "_" + rItem] = ParseScore(RankMatrixDataDict[studentID][k1][rItem].ToString());
+                                                                        else
+                                                                            row["科排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
                                                                 }
                                                             }
                                                         }
@@ -1350,7 +1356,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                                                 foreach (string rItem in r2List)
                                                                 {
                                                                     if (RankMatrixDataDict[studentID][k1][rItem] != null)
-                                                                        row["全校排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
+                                                                        if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                                            row["全校排名" + subjectIndex + "_" + rItem] = ParseScore(RankMatrixDataDict[studentID][k1][rItem].ToString());
+                                                                        else
+                                                                            row["全校排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
                                                                 }
                                                             }
                                                         }
@@ -1372,7 +1381,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                                                 foreach (string rItem in r2List)
                                                                 {
                                                                     if (RankMatrixDataDict[studentID][k1][rItem] != null)
-                                                                        row["類別1排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
+                                                                        if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                                            row["類別1排名" + subjectIndex + "_" + rItem] = ParseScore(RankMatrixDataDict[studentID][k1][rItem].ToString());
+                                                                        else
+                                                                            row["類別1排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
                                                                 }
                                                             }
                                                         }
@@ -1393,7 +1405,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                                                 foreach (string rItem in r2List)
                                                                 {
                                                                     if (RankMatrixDataDict[studentID][k1][rItem] != null)
-                                                                        row["類別2排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
+                                                                        if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                                            row["類別2排名" + subjectIndex + "_" + rItem] = ParseScore(RankMatrixDataDict[studentID][k1][rItem].ToString());
+                                                                        else
+                                                                            row["類別2排名" + subjectIndex + "_" + rItem] = RankMatrixDataDict[studentID][k1][rItem].ToString();
                                                                 }
                                                             }
                                                         }
@@ -1460,7 +1475,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["總分班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["總分班排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["總分班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1477,7 +1495,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["總分科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["總分科排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["總分科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1494,7 +1515,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["總分全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["總分全校排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["總分全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
                                 }
@@ -1519,7 +1543,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["平均班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["平均班排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["平均班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
 
                                     }
@@ -1537,7 +1564,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["平均科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["平均科排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["平均科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1554,7 +1584,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["平均全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["平均全校排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["平均全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
 
                                     }
@@ -1581,7 +1614,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權總分班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權總分班排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權總分班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1598,7 +1634,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權總分科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權總分科排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權總分科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1615,7 +1654,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權總分全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權總分全校排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權總分全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
 
                                     }
@@ -1642,7 +1684,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權平均班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權平均班排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權平均班排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1659,7 +1704,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權平均科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權平均科排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權平均科排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
 
                                     }
@@ -1676,7 +1724,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["加權平均全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["加權平均全校排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["加權平均全校排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
                                     }
 
@@ -1701,7 +1752,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別1總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別1總分排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別1總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
 
                                 }
@@ -1719,7 +1773,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別1平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別1平均排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別1平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
 
@@ -1736,7 +1793,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別1加權總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別1加權總分排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別1加權總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
 
@@ -1755,7 +1815,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                         foreach (string rItem in r2List)
                                         {
                                             if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                                row["類別1加權平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                                if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                    row["類別1加權平均排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                                else
+                                                    row["類別1加權平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                         }
 
                                     }
@@ -1780,7 +1843,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別2總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別2總分排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別2總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
 
@@ -1797,7 +1863,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別2平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別2平均排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別2平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
 
@@ -1814,7 +1883,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別2加權總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別2加權總分排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別2加權總分排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
 
@@ -1831,7 +1903,10 @@ namespace RegularAssessmentTranscriptFixedRank
                                     foreach (string rItem in r2List)
                                     {
                                         if (RankMatrixDataDict[studentID][skey][rItem] != null)
-                                            row["類別2加權平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
+                                            if (rItem.Contains("avg") || rItem.Contains("pr_") || rItem.Contains("std_dev_pop"))
+                                                row["類別2加權平均排名_" + rItem] = ParseScore(RankMatrixDataDict[studentID][skey][rItem].ToString());
+                                            else
+                                                row["類別2加權平均排名_" + rItem] = RankMatrixDataDict[studentID][skey][rItem].ToString();
                                     }
                                 }
                             }
